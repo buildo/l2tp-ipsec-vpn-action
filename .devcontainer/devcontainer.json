@@ -1,0 +1,10 @@
+{
+  "name": "VPN Dev Container",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "runArgs": [
+    "--cap-add=NET_ADMIN",
+    "--privileged"
+  ]
+}

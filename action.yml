@@ -1,0 +1,22 @@
+name: l2tp-ipsec-vpn
+author: Benedetto Nespoli
+description: This action connects to a L2TP/IPsec VPN server using the provided credentials and configuration.
+inputs:
+  server:
+    description: The IP address or hostname of the VPN server.
+    required: true
+  username:
+    description: The username for the VPN connection.
+    required: true
+  password:
+    description: The password for the VPN connection.
+    required: true
+  psk:
+    description: The pre-shared key for IPsec authentication.
+    required: true
+runs:
+  using: node20
+  main: src/index.js
+branding:
+  icon: 'shield'
+  color: 'green'
