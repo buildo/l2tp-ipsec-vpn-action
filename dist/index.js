@@ -31335,7 +31335,7 @@ nameserver 8.8.8.8
 	      // Check if IPsec connection is up
 	      let ipsecOutput = '';
 	      await exec('ipsec status', [], {
-	        silent: true,
+
 	        listeners: {
 	          stdout: (data) => { ipsecOutput += data.toString(); }
 	        }
@@ -31346,7 +31346,7 @@ nameserver 8.8.8.8
 	      // Check if PPP interface exists
 	      let ifaceOutput = '';
 	      await exec('ip a s ppp0', [], {
-	        silent: true,
+
 	        listeners: {
 	          stdout: (data) => { ifaceOutput += data.toString(); }
 	        }
@@ -31383,7 +31383,6 @@ nameserver 8.8.8.8
 	  // Get gateway for the VPN server
 	  let gateway = '';
 	  await exec(`ip route get ${server}`, [], {
-	    silent: true,
 	    listeners: {
 	      stdout: (data) => {
 	        const match = data.toString().match(/via (\d+\.\d+\.\d+\.\d+)/);

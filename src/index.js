@@ -96,7 +96,7 @@ async function waitForVpnConnection(timeout = 30_000, interval = 1000) {
       // Check if IPsec connection is up
       let ipsecOutput = '';
       await exec('ipsec status', [], {
-        silent: true,
+
         listeners: {
           stdout: (data) => { ipsecOutput += data.toString(); }
         }
@@ -107,7 +107,7 @@ async function waitForVpnConnection(timeout = 30_000, interval = 1000) {
       // Check if PPP interface exists
       let ifaceOutput = '';
       await exec('ip a s ppp0', [], {
-        silent: true,
+
         listeners: {
           stdout: (data) => { ifaceOutput += data.toString(); }
         }
@@ -144,7 +144,6 @@ async function startVPN(server) {
   // Get gateway for the VPN server
   let gateway = '';
   await exec(`ip route get ${server}`, [], {
-    silent: true,
     listeners: {
       stdout: (data) => {
         const match = data.toString().match(/via (\d+\.\d+\.\d+\.\d+)/);
