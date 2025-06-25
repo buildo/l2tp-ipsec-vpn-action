@@ -17,7 +17,11 @@ async function createFileWithSudo(path, content) {
 }
 
 async function createSymlinkWithSudo(target, source) {
-  await exec('sudo', ['ln', '-fs', source, target]);
+  try {
+    await exec('sudo', ['ln', '-fs', source, target]);
+  } catch (error) {
+    core.warning(`Failed to create symlink from ${source} to ${target}: ${error.message}`);
+  }
 }
 
 async function createConfigFiles(server, username, password, psk) {
