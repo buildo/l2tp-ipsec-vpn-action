@@ -1,5 +1,5 @@
 name: l2tp-ipsec-vpn
-author: Benedetto Nespoli
+author: @bennesp
 description: This action connects to a L2TP/IPsec VPN server using the provided credentials and configuration.
 inputs:
   server:
