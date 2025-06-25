@@ -31255,14 +31255,6 @@ function requireSrc () {
 	  await exec('sudo', ['chmod', '600', path]);
 	}
 
-	async function createSymlinkWithSudo(target, source) {
-	  try {
-	    await exec('sudo', ['ln', '-fs', source, target]);
-	  } catch (error) {
-	    core.warning(`Failed to create symlink from ${source} to ${target}: ${error.message}`);
-	  }
-	}
-
 	async function createConfigFiles(server, username, password, psk) {
 	  // See https://wiki.strongswan.org/projects/strongswan/wiki/connsection
 	  await createFileWithSudo('/etc/ipsec.conf', `
@@ -31329,7 +31321,7 @@ autodial = yes
 nameserver 1.1.1.1
 nameserver 8.8.8.8
 `);
-	  await createSymlinkWithSudo('/etc/resolv.conf', '/etc/resolv-vpn.conf');
+	  //await createSymlinkWithSudo('/etc/resolv.conf', '/etc/resolv-vpn.conf');
 
 	  core.info('All configuration files created successfully.');
 	}

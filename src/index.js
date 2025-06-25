@@ -90,7 +90,7 @@ autodial = yes
 nameserver 1.1.1.1
 nameserver 8.8.8.8
 `);
-  await createSymlinkWithSudo('/etc/resolv.conf', '/etc/resolv-vpn.conf');
+  //await createSymlinkWithSudo('/etc/resolv.conf', '/etc/resolv-vpn.conf');
 
   core.info('All configuration files created successfully.');
 }
