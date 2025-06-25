@@ -31365,7 +31365,8 @@ nameserver 8.8.8.8
 	    await new Promise((resolve) => setTimeout(resolve, interval));
 	  }
 
-	  throw new Error('VPN connection timeout: IPsec or PPP interface not ready');
+	  throw new Error('VPN connection timeout: IPsec or PPP interface not ready. Content of /var/log/xl2tpd.log:\n' +
+	    await fs.readFile('/var/log/xl2tpd.log', 'utf8'));
 	}
 
 	async function startVPN(server) {
