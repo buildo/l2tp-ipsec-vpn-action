@@ -95,7 +95,7 @@ async function waitForVpnConnection(timeout = 30_000, interval = 1000) {
     try {
       // Check if IPsec connection is up
       let ipsecOutput = '';
-      await exec('ipsec status', [], {
+      await exec('sudo ipsec status', [], {
 
         listeners: {
           stdout: (data) => { ipsecOutput += data.toString(); }

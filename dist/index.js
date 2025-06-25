@@ -31334,7 +31334,7 @@ nameserver 8.8.8.8
 	    try {
 	      // Check if IPsec connection is up
 	      let ipsecOutput = '';
-	      await exec('ipsec status', [], {
+	      await exec('sudo ipsec status', [], {
 
 	        listeners: {
 	          stdout: (data) => { ipsecOutput += data.toString(); }
