@@ -16,7 +16,7 @@ inputs:
     required: true
 runs:
   using: node20
-  main: src/index.js
+  main: dist/index.js
 branding:
   icon: 'shield'
   color: 'green'
