@@ -132,8 +132,8 @@ async function waitForVpnConnection(timeout = 30_000, interval = 1000) {
 async function startVPN(server) {
   core.info('Starting the VPN connection...');
 
-  await exec('ipsec start');
-  await exec('xl2tpd -C /tmp/l2tp-control');
+  await exec('sudo ipsec start');
+  await exec('sudo xl2tpd -C /tmp/l2tp-control');
 
   // Wait for the xl2tpd service to start
   core.info('Waiting for the VPN connection to start...');
