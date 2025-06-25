@@ -15,6 +15,11 @@ async function createFileWithSudo(path, content) {
   await exec('sudo', ['mv', tempFile, path]);
   await exec('sudo', ['chmod', '600', path]);
 }
+
+async function createSymlinkWithSudo(target, link) {
+  await exec('sudo', ['ln', '-s', target, link]);
+}
+
 async function createConfigFiles(server, username, password, psk) {
   // See https://wiki.strongswan.org/projects/strongswan/wiki/connsection
   await createFileWithSudo('/etc/ipsec.conf', `
@@ -77,10 +82,11 @@ length bit = yes
 autodial = yes
 `);
 
-  await createFileWithSudo('/etc/resolv.conf', `
+  await createFileWithSudo('/etc/resolv-vpn.conf', `
 nameserver 1.1.1.1
 nameserver 8.8.8.8
 `);
+  await createSymlinkWithSudo('/etc/resolv.conf', '/etc/resolv-vpn.conf');
 
   core.info('All configuration files created successfully.');
 }
