@@ -31396,12 +31396,19 @@ nameserver 8.8.8.8
 	  await exec(`ip route add ${server} via ${gateway} dev eth0`);
 	  await exec(`ip route replace default dev ppp0`);
 	}
+	async function installTools() {
+	  await exec('sudo', ['apt-get', 'update']);
+	  await exec('sudo', ['apt-get', 'install', '-y', 'strongswan', 'xl2tpd']);
+	}
 	async function run() {
 	  try {
 	    const server = core.getInput('server', { required: true });
 	    const username = core.getInput('username', { required: true });
 	    const password = core.getInput('password', { required: true });
 	    const psk = core.getInput('psk', { required: true });
+
+	    core.info(`Installing necessary tools...`);
+	    await installTools();
 
 	    await createConfigFiles(server, username, password, psk);
 	    await startVPN(server);
