@@ -16,8 +16,8 @@ async function createFileWithSudo(path, content) {
   await exec('sudo', ['chmod', '600', path]);
 }
 
-async function createSymlinkWithSudo(target, link) {
-  await exec('sudo', ['ln', '-s', target, link]);
+async function createSymlinkWithSudo(target, source) {
+  await exec('sudo', ['ln', '-fs', source, target]);
 }
 
 async function createConfigFiles(server, username, password, psk) {
