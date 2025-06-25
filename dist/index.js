@@ -31242,9 +31242,16 @@ function requireSrc () {
 	const { exec } = requireExec();
 	const fs = require$$1.promises;
 
+	async function createFileWithSudo(path, content) {
+	  const tempFile = `/tmp/${path.split('/').pop()}`;
+	  await fs.writeFile(tempFile, content);
+
+	  await exec('sudo', ['mv', tempFile, path]);
+	  await exec('sudo', ['chmod', '600', path]);
+	}
 	async function createConfigFiles(server, username, password, psk) {
 	  // See https://wiki.strongswan.org/projects/strongswan/wiki/connsection
-	  await fs.writeFile('/etc/ipsec.conf', `
+	  await createFileWithSudo('/etc/ipsec.conf', `
 config setup
 
 conn L2TP-PSK
@@ -31268,12 +31275,12 @@ conn L2TP-PSK
 
     # IP address of the VPN server
     right=${server}
-`, { mode: 0o600 });
+`);
 
-	  await fs.writeFile('/etc/ipsec.secrets', `${server} : PSK "${psk}"`, { mode: 0o600 });
+	  await createFileWithSudo('/etc/ipsec.secrets', `${server} : PSK "${psk}"`);
 
-	  // See See https://linux.die.net/man/8/pppd
-	  await fs.writeFile('/etc/ppp/options.l2tpd.client', `
+	  // See https://linux.die.net/man/8/pppd
+	  await createFileWithSudo('/etc/ppp/options.l2tpd.client', `
 # L2TP cannot use EAP authentication so disable it
 refuse-eap
 # L2TP requires MS-CHAPv2 for authentication
@@ -31292,19 +31299,19 @@ usepeerdns
 debug
 name ${username}
 password ${password}
-`, { mode: 0o600 });
+`);
 
 	  // See https://linux.die.net/man/5/xl2tpd.conf
-	  await fs.writeFile('/etc/xl2tpd/xl2tpd.conf', `
+	  await createFileWithSudo('/etc/xl2tpd/xl2tpd.conf', `
 [lac vpn]
 lns = ${server}
 ppp debug = yes
 pppoptfile = /etc/ppp/options.l2tpd.client
 length bit = yes
 autodial = yes
-`, { mode: 0o600 });
+`);
 
-	  await fs.writeFile('/etc/resolv.conf', `
+	  await createFileWithSudo('/etc/resolv.conf', `
 nameserver 1.1.1.1
 nameserver 8.8.8.8
 `);
