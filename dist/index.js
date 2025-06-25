@@ -31246,6 +31246,11 @@ function requireSrc () {
 	  const tempFile = `/tmp/${path.split('/').pop()}`;
 	  await fs.writeFile(tempFile, content);
 
+	  const dirname = path.substring(0, path.lastIndexOf('/'));
+	  if (dirname) {
+	    await exec('sudo', ['mkdir', '-p', dirname]);
+	  }
+
 	  await exec('sudo', ['mv', tempFile, path]);
 	  await exec('sudo', ['chmod', '600', path]);
 	}
