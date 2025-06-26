@@ -31376,6 +31376,7 @@ nameserver 8.8.8.8
 
 	  await exec('sudo ipsec start');
 	  await exec('sudo xl2tpd -C /tmp/l2tp-control');
+	  await exec('sudo echo "c vpn" > /tmp/l2tp-control');
 
 	  // Wait for the xl2tpd service to start
 	  core.info('Waiting for the VPN connection to start...');
